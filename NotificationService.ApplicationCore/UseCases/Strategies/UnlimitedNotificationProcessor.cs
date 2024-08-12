@@ -2,7 +2,7 @@ using NotificationService.ApplicationCore.UseCases.Abstractions;
 using NotificationService.Commons;
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.UseCases;
+namespace NotificationService.ApplicationCore.UseCases.Strategies;
 
 public class UnlimitedNotificationProcessor : INotifierStrategy
 {

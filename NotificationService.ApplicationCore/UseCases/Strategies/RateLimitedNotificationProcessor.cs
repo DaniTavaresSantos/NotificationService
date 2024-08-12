@@ -4,7 +4,7 @@ using NotificationService.Commons;
 using NotificationService.Contracts;
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.UseCases;
+namespace NotificationService.ApplicationCore.UseCases.Strategies;
 
 public class RateLimitedNotificationProcessor : INotifierStrategy
 {

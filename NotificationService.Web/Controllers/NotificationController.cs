@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using NotificationService.ApplicationCore.Mappers;
 using NotificationService.ApplicationCore.UseCases.Abstractions;
 using NotificationService.Contracts;
+using NotificationService.Domain;
 
 namespace NotificationService.Web.Controllers;
 
@@ -17,9 +19,14 @@ public class NotificationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> SendNotification(
+        [FromBody] [Required] NotificationRequest request,
+        [FromHeader] [Required] LimitType limitType,
+        CancellationToken cancellationToken)
     {
-        var response = await _notificationProcessor.Send(request.ToNotification(), cancellationToken);
+        var notification = request.ToNotification(limitType);
+        
+        var response = await _notificationProcessor.Send(notification, cancellationToken);
 
         return response.IsSuccess ? Ok(response) : StatusCode(429, response);
     }

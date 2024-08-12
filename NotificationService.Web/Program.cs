@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using NotificationService.ApplicationCore.Settings;
+using NotificationService.Infra.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,13 @@ var rateLimitConfig = new RateLimitConfig();
 builder.Configuration.GetSection("RateLimitConfig").Bind(rateLimitConfig);
 builder.Services.AddSingleton(rateLimitConfig);
 
+//Adding Redis Service
+var cacheConnectionString = builder.Configuration.GetConnectionString("Cache");
+builder.Services.AddStackExchangeRedisCache(options =>
+    options.Configuration = cacheConnectionString);
 builder.Services.AddAppCoreSettings();
+builder.Services.AddInfraSettings();
+
 
 //Adding Controller Services
 builder.Services.AddControllers(_ =>
@@ -25,10 +32,10 @@ builder.Services.AddControllers(_ =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
             
-builder.Services.AddCors(options => {
-    options.AddPolicy("CorsPolicy", policyBuilder => 
-        policyBuilder.SetIsOriginAllowed(_ => true).AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
-});
+// builder.Services.AddCors(options => {
+//     options.AddPolicy("CorsPolicy", policyBuilder => 
+//         policyBuilder.SetIsOriginAllowed(_ => true).AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
+// });
 
 var app = builder.Build();
 
