@@ -1,6 +1,17 @@
 ﻿services:
   notificationservice.web:
-    image: notificationservice.web
+    container_name: ${DOCKER_REGISTRY-}notificationservice.web
     build:
       context: .
       dockerfile: NotificationService.Web/Dockerfile
+    ports:
+      - "8080:5000"
+      - "8081:5001"
+        
+  rediscache:
+    container_name: "rediscache"
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+  
