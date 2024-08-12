@@ -1,6 +1,5 @@
 using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 using NotificationService.Infra.Cache.Abstractions;
 
 namespace NotificationService.Infra.Cache;
@@ -17,9 +16,8 @@ public class CacheService: ICacheService
     {
         var value = _cacheService.GetString(key);
         if (!string.IsNullOrEmpty(value))
-        {
-            return JsonConvert.DeserializeObject<T>(value);
-        }
+            return JsonSerializer.Deserialize<T>(value);
+        
         return default;
     }
 
@@ -30,7 +28,7 @@ public class CacheService: ICacheService
     }
 
     /// <summary>
-    /// Set cache
+    /// Set cache Value and its expiration Time Relative to now
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
@@ -42,6 +40,8 @@ public class CacheService: ICacheService
         {
             AbsoluteExpirationRelativeToNow = expirationTime
         };
-        _cacheService.SetString(key, JsonConvert.SerializeObject(value), options);
+        
+        _cacheService.SetString(key, JsonSerializer.Serialize(value), options);
+
     }
 }
