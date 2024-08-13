@@ -5,7 +5,7 @@ namespace NotificationService.Application.UseCases.Abstractions;
 
 public interface IRateLimitProcessor
 {
-    bool IsNotificationAllowed(Notification notification);
+    bool IsNotificationAllowed(Notification notification, string cacheKey);
 
-    Result UpdateNotificationLimit(Notification notification);
+    Result UpdateNotificationLimit(Notification notification, string cacheKey);
 }
