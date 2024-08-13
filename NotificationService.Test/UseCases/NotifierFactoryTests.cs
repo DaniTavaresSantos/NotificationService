@@ -1,6 +1,6 @@
 using Moq;
 using NotificationService.Application.UseCases;
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Domain;
 using Xunit;
 

@@ -1,10 +1,10 @@
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Commons;
 using NotificationService.Domain;
 
-namespace NotificationService.Application.UseCases.Strategies;
+namespace NotificationService.Infra.Gateways.Strategies;
 
-public class UnlimitedNotificationProcessor : INotifierStrategy
+public class UnlimitedNotificationGateway : INotifierStrategy
 {
     public LimitType LimitType => LimitType.Unlimited;
 

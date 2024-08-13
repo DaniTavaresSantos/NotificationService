@@ -1,7 +1,7 @@
 using NotificationService.Commons;
 using NotificationService.Domain;
 
-namespace NotificationService.Application.UseCases.Abstractions;
+namespace NotificationService.Application.Abstractions.UseCases;
 
 public interface INotificationProcessor
 { 

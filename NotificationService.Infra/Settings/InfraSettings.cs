@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
+using NotificationService.Application.Abstractions.Repositories;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Infra.Cache;
-using NotificationService.Infra.Cache.Abstractions;
+using NotificationService.Infra.Gateways.Strategies;
 
 namespace NotificationService.Infra.Settings;
 
@@ -10,6 +12,9 @@ public static class InfraSettings
 {
     public static void AddInfraSettings(this IServiceCollection services)
     {
-        services.AddScoped<ICacheRepository, CacheRepository>();
+        services.AddScoped<IRateLimitRepository, RateLimitRepository>();
+        
+        services.AddTransient<INotifierStrategy, RateLimitedNotificationGateway>();
+        services.AddTransient<INotifierStrategy, UnlimitedNotificationGateway>();
     }
 }

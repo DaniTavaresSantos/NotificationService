@@ -7,15 +7,15 @@ using Xunit;
 
 namespace NotificationService.Test.Infra;
 
-public class CacheRepositoryTests
+public class RateLimitRepositoryTests
 {
         private readonly Mock<IDistributedCache> _mockDistributedCache;
-        private readonly CacheRepository _cacheRepository;
+        private readonly RateLimitRepository _rateLimitRepository;
 
-        public CacheRepositoryTests()
+        public RateLimitRepositoryTests()
         {
             _mockDistributedCache = new Mock<IDistributedCache>();
-            _cacheRepository = new CacheRepository(_mockDistributedCache.Object);
+            _rateLimitRepository = new RateLimitRepository(_mockDistributedCache.Object);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ public class CacheRepositoryTests
             _mockDistributedCache.Setup(c => c.Get(key)).Returns(Encoding.ASCII.GetBytes(jsonValue));
 
             // Act
-            var result = _cacheRepository.GetData<int>(key);
+            var result = _rateLimitRepository.GetData<int>(key);
 
             // Assert
             Assert.NotNull(result);
@@ -45,7 +45,7 @@ public class CacheRepositoryTests
             _mockDistributedCache.Setup(c => c.Get(key)).Returns([]);
 
             // Act
-            var result = _cacheRepository.GetData<dynamic>(key);
+            var result = _rateLimitRepository.GetData<dynamic>(key);
 
             // Assert
             Assert.Null(result);
@@ -60,7 +60,7 @@ public class CacheRepositoryTests
             var expirationTime = TimeSpan.FromMinutes(5);
 
             // Act
-            _cacheRepository.SetData(key, value, expirationTime);
+            _rateLimitRepository.SetData(key, value, expirationTime);
 
             // Assert
             _mockDistributedCache.Verify(c => c.Set(It.IsAny<string>(), 
