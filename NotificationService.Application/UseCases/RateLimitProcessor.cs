@@ -10,22 +10,20 @@ public class RateLimitProcessor(ICacheRepository cache, RateLimitConfig rateLimi
 {
     private readonly Dictionary<string, RateLimitSettings> _rateLimits = rateLimitConfig.RateLimits;
 
-    public bool IsNotificationAllowed(Notification notification)
+    public bool IsNotificationAllowed(Notification notification, string cacheKey)
     {
         if (!_rateLimits.ContainsKey(notification.Type.ToString())) return true;
 
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
-        var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
-        var alreadyMadeNotifications = cache.GetData<int>(cacheKey); // Verificar se vai retornar 0 quando for default (nao achar na base)
+        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
 
         return alreadyMadeNotifications < rateLimitInfo.Limit;
     }
 
-    public Result UpdateNotificationLimit(Notification notification)
+    public Result UpdateNotificationLimit(Notification notification, string cacheKey)
     {
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
-        var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
         var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
 
