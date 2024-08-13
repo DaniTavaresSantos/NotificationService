@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using NotificationService.ApplicationCore.UseCases;
 using NotificationService.ApplicationCore.UseCases.Abstractions;
@@ -5,6 +6,7 @@ using NotificationService.ApplicationCore.UseCases.Strategies;
 
 namespace NotificationService.ApplicationCore.Settings;
 
+[ExcludeFromCodeCoverage]
 public static class ApplicationSettings
 {
     public static void AddAppCoreSettings(this IServiceCollection services)

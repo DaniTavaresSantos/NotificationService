@@ -20,11 +20,4 @@ public interface ICacheService
     /// <param name="expirationTime"></param>
     /// <returns></returns>
     void SetData<T>(string key, T value, TimeSpan expirationTime);
-
-    /// <summary>
-    /// Remove Data
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    object RemoveData(string key);
 }
