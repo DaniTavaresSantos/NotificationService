@@ -39,7 +39,7 @@ public class RateLimitProcessorTests
             };
 
             // Act
-            var result = _rateLimitProcessor.IsNotificationAllowed(notification);
+            var result = _rateLimitProcessor.IsNotificationAllowed(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}");
 
             // Assert
             Assert.True(result);
@@ -59,7 +59,7 @@ public class RateLimitProcessorTests
                              .Returns(1); // Existing count is below the limit
 
             // Act
-            var result = _rateLimitProcessor.IsNotificationAllowed(notification);
+            var result = _rateLimitProcessor.IsNotificationAllowed(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}");
 
             // Assert
             Assert.True(result);
@@ -79,7 +79,7 @@ public class RateLimitProcessorTests
                              .Returns(3); // Existing count equals the limit
 
             // Act
-            var result = _rateLimitProcessor.IsNotificationAllowed(notification);
+            var result = _rateLimitProcessor.IsNotificationAllowed(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}");
 
             // Assert
             Assert.False(result);
@@ -99,7 +99,7 @@ public class RateLimitProcessorTests
                              .Returns(3); // Existing count is 3
 
             // Act
-            var result = _rateLimitProcessor.UpdateNotificationLimit(notification);
+            var result = _rateLimitProcessor.UpdateNotificationLimit(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}");
 
             // Assert
             _mockCacheService.Verify(cache => cache.SetData("test@example.com:News", 4, It.IsAny<TimeSpan>()), Times.Once);
