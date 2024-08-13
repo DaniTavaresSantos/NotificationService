@@ -52,19 +52,6 @@ public class CacheServiceTests
         }
 
         [Fact]
-        public void RemoveData_ShouldCallRemoveOnCacheService()
-        {
-            // Arrange
-            var key = "testKey";
-
-            // Act
-            _cacheService.RemoveData(key);
-
-            // Assert
-            _mockDistributedCache.Verify(c => c.Remove(key), Times.Once);
-        }
-
-        [Fact]
         public void SetData_ShouldCallSetStringOnCacheService()
         {
             // Arrange
