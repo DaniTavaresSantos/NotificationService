@@ -21,12 +21,6 @@ public class CacheService: ICacheService
         return default;
     }
 
-    public object RemoveData(string key)
-    {
-        _cacheService.Remove(key);
-        return true;
-    }
-
     /// <summary>
     /// Set cache Value and its expiration Time Relative to now
     /// </summary>

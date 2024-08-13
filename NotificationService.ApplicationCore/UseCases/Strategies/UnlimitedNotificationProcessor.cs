@@ -15,7 +15,7 @@ public class UnlimitedNotificationProcessor : INotifierStrategy
         //The code below is a simulation of a communication of this service with a Message broker or External Api, that is going to send the message effectively
         await Task.Delay(100);
         
-        Console.WriteLine($"Mesasge sent to user {notification.Recipient.EmailAdress}");
+        Console.WriteLine($"Message sent to user {notification.Recipient.EmailAdress}");
 
         return Result.Success();
     }

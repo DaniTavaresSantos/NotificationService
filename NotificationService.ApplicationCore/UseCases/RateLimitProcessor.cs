@@ -14,17 +14,16 @@ public class RateLimitProcessor(ICacheService cache, RateLimitConfig rateLimitCo
 
     public bool IsNotificationAllowed(Notification notification)
     {
-        
         if (!_rateLimits.ContainsKey(notification.Type.ToString())) return true;
 
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
         var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
-        var cacheInfo = cache.GetData<int>(cacheKey);
+        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
         
         var notificationCount = 0;
-        if(cacheInfo != 0) 
-            notificationCount = cacheInfo;
+        if(alreadyMadeNotifications != 0) 
+            notificationCount = alreadyMadeNotifications;
 
         return notificationCount < rateLimitInfo.Limit;
     }
@@ -34,11 +33,11 @@ public class RateLimitProcessor(ICacheService cache, RateLimitConfig rateLimitCo
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
         var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
-        var cacheInfo = cache.GetData<int>(cacheKey);
+        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
         
         var notificationCount = 0;
-        if(cacheInfo != 0) 
-            notificationCount = cacheInfo;
+        if(alreadyMadeNotifications != 0) 
+            notificationCount = alreadyMadeNotifications;
 
         notificationCount++;
 
