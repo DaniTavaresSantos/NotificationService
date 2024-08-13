@@ -1,24 +1,24 @@
 using Microsoft.Extensions.Logging;
 using Moq;
-using NotificationService.Application.UseCases.Abstractions;
-using NotificationService.Application.UseCases.Strategies;
+using NotificationService.Application.Abstractions.UseCases;
+using NotificationService.Infra.Gateways.Strategies;
 using NotificationService.Domain;
 using Xunit;
 using Type = NotificationService.Domain.Type;
 
 namespace NotificationService.Test.UseCases.Strategies;
 
-public class RateLimitedNotificationProcessorTests
+public class RateLimitedNotificationGatewayTests
 {
         private readonly Mock<IRateLimitProcessor> _mockRateLimitProcessor;
-        private readonly Mock<ILogger<RateLimitedNotificationProcessor>> _mockLogger;
-        private readonly RateLimitedNotificationProcessor _rateLimitedNotificationProcessor;
+        private readonly Mock<ILogger<RateLimitedNotificationGateway>> _mockLogger;
+        private readonly RateLimitedNotificationGateway _rateLimitedNotificationGateway;
 
-        public RateLimitedNotificationProcessorTests()
+        public RateLimitedNotificationGatewayTests()
         {
             _mockRateLimitProcessor = new Mock<IRateLimitProcessor>();
-            _mockLogger = new Mock<ILogger<RateLimitedNotificationProcessor>>();
-            _rateLimitedNotificationProcessor = new RateLimitedNotificationProcessor(
+            _mockLogger = new Mock<ILogger<RateLimitedNotificationGateway>>();
+            _rateLimitedNotificationGateway = new RateLimitedNotificationGateway(
                 _mockRateLimitProcessor.Object,
                 _mockLogger.Object
             );
@@ -38,7 +38,7 @@ public class RateLimitedNotificationProcessorTests
                                    .Returns(true);
 
             // Act
-            var result = await _rateLimitedNotificationProcessor.Notify(notification);
+            var result = await _rateLimitedNotificationGateway.Notify(notification);
 
             // Assert
             Assert.True(result.IsSuccess);
@@ -59,7 +59,7 @@ public class RateLimitedNotificationProcessorTests
                                    .Returns(false);
 
             // Act
-            var result = await _rateLimitedNotificationProcessor.Notify(notification);
+            var result = await _rateLimitedNotificationGateway.Notify(notification);
 
             // Assert
             Assert.False(result.IsSuccess);

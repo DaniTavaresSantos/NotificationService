@@ -10,7 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\NotificationService.Commons\NotificationService.Commons.csproj" />
       <ProjectReference Include="..\NotificationService.Domain\NotificationService.Domain.csproj" />
-      <ProjectReference Include="..\NotificationService.Infra\NotificationService.Infra.csproj" />
     </ItemGroup>
 
     <ItemGroup>

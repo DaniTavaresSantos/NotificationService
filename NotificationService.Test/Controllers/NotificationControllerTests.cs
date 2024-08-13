@@ -1,7 +1,7 @@
 using AutoBogus;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Commons;
 using NotificationService.Commons.Request;
 using NotificationService.Domain;

@@ -1,6 +1,6 @@
-namespace NotificationService.Infra.Cache.Abstractions;
+namespace NotificationService.Application.Abstractions.Repositories;
 
-public interface ICacheRepository
+public interface IRateLimitRepository
 
 {
     /// <summary>

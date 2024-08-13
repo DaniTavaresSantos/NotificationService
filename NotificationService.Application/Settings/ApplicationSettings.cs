@@ -1,8 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using NotificationService.Application.UseCases;
-using NotificationService.Application.UseCases.Abstractions;
-using NotificationService.Application.UseCases.Strategies;
+using NotificationService.Application.Abstractions.UseCases;
 
 namespace NotificationService.Application.Settings;
 
@@ -15,8 +14,5 @@ public static class ApplicationSettings
         services.AddScoped<INotificationProcessor, NotificationProcessor>();
 
         services.AddTransient<INotifierFactory, NotifierFactory>();
-
-        services.AddTransient<INotifierStrategy, RateLimitedNotificationProcessor>();
-        services.AddTransient<INotifierStrategy, UnlimitedNotificationProcessor>();
     }
 }

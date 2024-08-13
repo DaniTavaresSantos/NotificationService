@@ -1,12 +1,12 @@
+using NotificationService.Application.Abstractions.Repositories;
 using NotificationService.Application.Settings;
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Commons;
 using NotificationService.Domain;
-using NotificationService.Infra.Cache.Abstractions;
 
 namespace NotificationService.Application.UseCases;
 
-public class RateLimitProcessor(ICacheRepository cache, RateLimitConfig rateLimitConfig) : IRateLimitProcessor
+public class RateLimitProcessor(IRateLimitRepository rateLimit, RateLimitConfig rateLimitConfig) : IRateLimitProcessor
 {
     private readonly Dictionary<string, RateLimitSettings> _rateLimits = rateLimitConfig.RateLimits;
 
@@ -16,7 +16,7 @@ public class RateLimitProcessor(ICacheRepository cache, RateLimitConfig rateLimi
 
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
         
-        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
+        var alreadyMadeNotifications = rateLimit.GetData<int>(cacheKey);
 
         return alreadyMadeNotifications < rateLimitInfo.Limit;
     }
@@ -25,11 +25,11 @@ public class RateLimitProcessor(ICacheRepository cache, RateLimitConfig rateLimi
     {
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
         
-        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
+        var alreadyMadeNotifications = rateLimit.GetData<int>(cacheKey);
 
         alreadyMadeNotifications++;
 
-        cache.SetData(cacheKey, alreadyMadeNotifications, rateLimitInfo.TimePeriod);
+        rateLimit.SetData(cacheKey, alreadyMadeNotifications, rateLimitInfo.TimePeriod);
         
         return Result.Success();
     }

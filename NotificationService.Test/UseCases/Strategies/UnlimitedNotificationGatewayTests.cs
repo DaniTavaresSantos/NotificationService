@@ -1,17 +1,17 @@
-using NotificationService.Application.UseCases.Strategies;
+using NotificationService.Infra.Gateways.Strategies;
 using NotificationService.Domain;
 using Xunit;
 using Type = NotificationService.Domain.Type;
 
 namespace NotificationService.Test.UseCases.Strategies;
 
-public class UnlimitedNotificationProcessorTests
+public class UnlimitedNotificationGatewayTests
 {
-    private readonly UnlimitedNotificationProcessor _unlimitedNotificationProcessor;
+    private readonly UnlimitedNotificationGateway _unlimitedNotificationGateway;
 
-    public UnlimitedNotificationProcessorTests()
+    public UnlimitedNotificationGatewayTests()
     {
-        _unlimitedNotificationProcessor = new UnlimitedNotificationProcessor();
+        _unlimitedNotificationGateway = new UnlimitedNotificationGateway();
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public class UnlimitedNotificationProcessorTests
         };
 
         // Act
-        var result = await _unlimitedNotificationProcessor.Notify(notification);
+        var result = await _unlimitedNotificationGateway.Notify(notification);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -46,7 +46,7 @@ public class UnlimitedNotificationProcessorTests
             Console.SetOut(consoleOutput);
 
             // Act
-            await _unlimitedNotificationProcessor.Notify(notification);
+            await _unlimitedNotificationGateway.Notify(notification);
 
             // Assert
             var output = consoleOutput.ToString();

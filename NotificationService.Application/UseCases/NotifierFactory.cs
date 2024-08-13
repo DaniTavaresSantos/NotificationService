@@ -1,4 +1,4 @@
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Domain;
 
 namespace NotificationService.Application.UseCases;
