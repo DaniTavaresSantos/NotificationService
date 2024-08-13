@@ -34,7 +34,7 @@ public class RateLimitedNotificationProcessorTests
                 Recipient = new Recipient { EmailAdress = "test@example.com" }
             };
 
-            _mockRateLimitProcessor.Setup(r => r.IsNotificationAllowed(notification))
+            _mockRateLimitProcessor.Setup(r => r.IsNotificationAllowed(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}"))
                                    .Returns(true);
 
             // Act
@@ -42,7 +42,7 @@ public class RateLimitedNotificationProcessorTests
 
             // Assert
             Assert.True(result.IsSuccess);
-            _mockRateLimitProcessor.Verify(r => r.UpdateNotificationLimit(notification), Times.Once);
+            _mockRateLimitProcessor.Verify(r => r.UpdateNotificationLimit(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}"), Times.Once);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ public class RateLimitedNotificationProcessorTests
                 Recipient = new Recipient { EmailAdress = "test@example.com" }
             };
 
-            _mockRateLimitProcessor.Setup(r => r.IsNotificationAllowed(notification))
+            _mockRateLimitProcessor.Setup(r => r.IsNotificationAllowed(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}"))
                                    .Returns(false);
 
             // Act
@@ -64,6 +64,6 @@ public class RateLimitedNotificationProcessorTests
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal("RateLimit.Exceeded", result.Error.Code);
-            _mockRateLimitProcessor.Verify(r => r.UpdateNotificationLimit(notification), Times.Never);
+            _mockRateLimitProcessor.Verify(r => r.UpdateNotificationLimit(notification, $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}"), Times.Never);
         }
 }
