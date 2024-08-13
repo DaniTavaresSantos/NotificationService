@@ -1,14 +1,14 @@
 using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
-using NotificationService.Infra.Cache.Abstractions;
+using NotificationService.Application.Abstractions.Repositories;
 
 namespace NotificationService.Infra.Cache;
 
-public class CacheRepository(IDistributedCache cacheService) : ICacheRepository
+public class RateLimitRepository(IDistributedCache distributedCache) : IRateLimitRepository
 {
     public T GetData<T>(string key)
     {
-        var value = cacheService.GetString(key);
+        var value = distributedCache.GetString(key);
         if (!string.IsNullOrEmpty(value))
             return JsonSerializer.Deserialize<T>(value);
         
@@ -29,7 +29,7 @@ public class CacheRepository(IDistributedCache cacheService) : ICacheRepository
             AbsoluteExpirationRelativeToNow = expirationTime
         };
         
-        cacheService.SetString(key, JsonSerializer.Serialize(value), options);
+        distributedCache.SetString(key, JsonSerializer.Serialize(value), options);
 
     }
 }

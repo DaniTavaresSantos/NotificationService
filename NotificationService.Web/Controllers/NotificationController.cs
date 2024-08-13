@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Domain;
 using NotificationService.Application.Mappers;
 using NotificationService.Commons.Request;

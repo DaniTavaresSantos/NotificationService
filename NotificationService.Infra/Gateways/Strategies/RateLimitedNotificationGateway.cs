@@ -1,16 +1,16 @@
 using Microsoft.Extensions.Logging;
-using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Commons;
 using NotificationService.Domain;
 
-namespace NotificationService.Application.UseCases.Strategies;
+namespace NotificationService.Infra.Gateways.Strategies;
 
-public class RateLimitedNotificationProcessor : INotifierStrategy
+public class RateLimitedNotificationGateway : INotifierStrategy
 {
     private readonly IRateLimitProcessor _rateLimitProcessor;
-    private readonly ILogger<RateLimitedNotificationProcessor> _logger;
+    private readonly ILogger<RateLimitedNotificationGateway> _logger;
 
-    public RateLimitedNotificationProcessor(IRateLimitProcessor rateLimitProcessor, ILogger<RateLimitedNotificationProcessor> logger)
+    public RateLimitedNotificationGateway(IRateLimitProcessor rateLimitProcessor, ILogger<RateLimitedNotificationGateway> logger)
     {
         _rateLimitProcessor = rateLimitProcessor;
         _logger = logger;
