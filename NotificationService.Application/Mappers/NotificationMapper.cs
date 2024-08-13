@@ -1,7 +1,7 @@
-using NotificationService.Contracts;
+using NotificationService.Commons.Request;
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.Mappers;
+namespace NotificationService.Application.Mappers;
 
 public static class NotificationMapper
 {

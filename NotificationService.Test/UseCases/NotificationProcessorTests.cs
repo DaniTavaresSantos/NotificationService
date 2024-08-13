@@ -1,7 +1,7 @@
 using Moq;
 using Microsoft.Extensions.Logging;
-using NotificationService.ApplicationCore.UseCases;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
+using NotificationService.Application.UseCases;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Commons;
 using NotificationService.Domain;
 using Xunit;

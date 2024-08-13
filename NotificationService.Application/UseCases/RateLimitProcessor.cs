@@ -1,14 +1,12 @@
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
-using NotificationService.ApplicationCore.Settings;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
+using NotificationService.Application.Settings;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Commons;
 using NotificationService.Domain;
 using NotificationService.Infra.Cache.Abstractions;
 
-namespace NotificationService.ApplicationCore.UseCases;
+namespace NotificationService.Application.UseCases;
 
-public class RateLimitProcessor(ICacheService cache, RateLimitConfig rateLimitConfig) : IRateLimitProcessor
+public class RateLimitProcessor(ICacheRepository cache, RateLimitConfig rateLimitConfig) : IRateLimitProcessor
 {
     private readonly Dictionary<string, RateLimitSettings> _rateLimits = rateLimitConfig.RateLimits;
 
@@ -19,13 +17,9 @@ public class RateLimitProcessor(ICacheService cache, RateLimitConfig rateLimitCo
         var rateLimitInfo = _rateLimits[notification.Type.ToString()];
         var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
-        var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
-        
-        var notificationCount = 0;
-        if(alreadyMadeNotifications != 0) 
-            notificationCount = alreadyMadeNotifications;
+        var alreadyMadeNotifications = cache.GetData<int>(cacheKey); // Verificar se vai retornar 0 quando for default (nao achar na base)
 
-        return notificationCount < rateLimitInfo.Limit;
+        return alreadyMadeNotifications < rateLimitInfo.Limit;
     }
 
     public Result UpdateNotificationLimit(Notification notification)
@@ -34,14 +28,10 @@ public class RateLimitProcessor(ICacheService cache, RateLimitConfig rateLimitCo
         var cacheKey = $"{notification.Recipient.EmailAdress}:{notification.Type.ToString()}";
         
         var alreadyMadeNotifications = cache.GetData<int>(cacheKey);
-        
-        var notificationCount = 0;
-        if(alreadyMadeNotifications != 0) 
-            notificationCount = alreadyMadeNotifications;
 
-        notificationCount++;
+        alreadyMadeNotifications++;
 
-        cache.SetData(cacheKey, notificationCount, rateLimitInfo.TimePeriod);
+        cache.SetData(cacheKey, alreadyMadeNotifications, rateLimitInfo.TimePeriod);
         
         return Result.Success();
     }

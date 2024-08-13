@@ -1,11 +1,9 @@
-using System.Runtime.CompilerServices;
 using AutoBogus;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Commons;
-using NotificationService.Contracts;
+using NotificationService.Commons.Request;
 using NotificationService.Domain;
 using NotificationService.Web.Controllers;
 using Xunit;

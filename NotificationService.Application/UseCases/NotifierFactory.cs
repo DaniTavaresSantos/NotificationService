@@ -1,7 +1,7 @@
-using NotificationService.ApplicationCore.UseCases.Abstractions;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.UseCases;
+namespace NotificationService.Application.UseCases;
 
 public class NotifierFactory : INotifierFactory
 {

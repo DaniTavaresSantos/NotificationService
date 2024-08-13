@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using NotificationService.ApplicationCore.Mappers;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
-using NotificationService.Contracts;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Domain;
+using NotificationService.Application.Mappers;
+using NotificationService.Commons.Request;
 
 namespace NotificationService.Web.Controllers;
 

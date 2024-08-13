@@ -4,17 +4,11 @@ using NotificationService.Infra.Cache.Abstractions;
 
 namespace NotificationService.Infra.Cache;
 
-public class CacheService: ICacheService
+public class CacheRepository(IDistributedCache cacheService) : ICacheRepository
 {
-    private IDistributedCache _cacheService;
-    public CacheService(IDistributedCache cacheService)
-    {
-        _cacheService = cacheService;
-    }
-
     public T GetData<T>(string key)
     {
-        var value = _cacheService.GetString(key);
+        var value = cacheService.GetString(key);
         if (!string.IsNullOrEmpty(value))
             return JsonSerializer.Deserialize<T>(value);
         
@@ -35,7 +29,7 @@ public class CacheService: ICacheService
             AbsoluteExpirationRelativeToNow = expirationTime
         };
         
-        _cacheService.SetString(key, JsonSerializer.Serialize(value), options);
+        cacheService.SetString(key, JsonSerializer.Serialize(value), options);
 
     }
 }
