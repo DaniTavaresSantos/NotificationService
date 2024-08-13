@@ -7,15 +7,15 @@ using Xunit;
 
 namespace NotificationService.Test.Infra;
 
-public class CacheServiceTests
+public class CacheRepositoryTests
 {
         private readonly Mock<IDistributedCache> _mockDistributedCache;
-        private readonly CacheService _cacheService;
+        private readonly CacheRepository _cacheRepository;
 
-        public CacheServiceTests()
+        public CacheRepositoryTests()
         {
             _mockDistributedCache = new Mock<IDistributedCache>();
-            _cacheService = new CacheService(_mockDistributedCache.Object);
+            _cacheRepository = new CacheRepository(_mockDistributedCache.Object);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ public class CacheServiceTests
             _mockDistributedCache.Setup(c => c.Get(key)).Returns(Encoding.ASCII.GetBytes(jsonValue));
 
             // Act
-            var result = _cacheService.GetData<int>(key);
+            var result = _cacheRepository.GetData<int>(key);
 
             // Assert
             Assert.NotNull(result);
@@ -45,7 +45,7 @@ public class CacheServiceTests
             _mockDistributedCache.Setup(c => c.Get(key)).Returns([]);
 
             // Act
-            var result = _cacheService.GetData<dynamic>(key);
+            var result = _cacheRepository.GetData<dynamic>(key);
 
             // Assert
             Assert.Null(result);
@@ -60,7 +60,7 @@ public class CacheServiceTests
             var expirationTime = TimeSpan.FromMinutes(5);
 
             // Act
-            _cacheService.SetData(key, value, expirationTime);
+            _cacheRepository.SetData(key, value, expirationTime);
 
             // Assert
             _mockDistributedCache.Verify(c => c.Set(It.IsAny<string>(), 

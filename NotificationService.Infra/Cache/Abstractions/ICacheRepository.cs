@@ -1,6 +1,6 @@
 namespace NotificationService.Infra.Cache.Abstractions;
 
-public interface ICacheService
+public interface ICacheRepository
 
 {
     /// <summary>

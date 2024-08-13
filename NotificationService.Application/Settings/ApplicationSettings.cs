@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
-using NotificationService.ApplicationCore.UseCases;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
-using NotificationService.ApplicationCore.UseCases.Strategies;
+using NotificationService.Application.UseCases;
+using NotificationService.Application.UseCases.Abstractions;
+using NotificationService.Application.UseCases.Strategies;
 
-namespace NotificationService.ApplicationCore.Settings;
+namespace NotificationService.Application.Settings;
 
 [ExcludeFromCodeCoverage]
 public static class ApplicationSettings

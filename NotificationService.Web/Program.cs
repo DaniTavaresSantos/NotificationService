@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using NotificationService.ApplicationCore.Settings;
+using NotificationService.Application.Settings;
 using NotificationService.Infra.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,11 +31,6 @@ builder.Services.AddControllers(_ =>
         options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-            
-// builder.Services.AddCors(options => {
-//     options.AddPolicy("CorsPolicy", policyBuilder => 
-//         policyBuilder.SetIsOriginAllowed(_ => true).AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build());
-// });
 
 var app = builder.Build();
 

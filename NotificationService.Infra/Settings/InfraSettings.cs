@@ -10,6 +10,6 @@ public static class InfraSettings
 {
     public static void AddInfraSettings(this IServiceCollection services)
     {
-        services.AddScoped<ICacheService, CacheService>();
+        services.AddScoped<ICacheRepository, CacheRepository>();
     }
 }

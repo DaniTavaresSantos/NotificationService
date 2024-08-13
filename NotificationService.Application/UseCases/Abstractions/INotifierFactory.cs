@@ -1,6 +1,6 @@
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.UseCases.Abstractions;
+namespace NotificationService.Application.UseCases.Abstractions;
 
 public interface INotifierFactory
 {
