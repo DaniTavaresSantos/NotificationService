@@ -1,6 +1,6 @@
 using Moq;
-using NotificationService.ApplicationCore.Settings;
-using NotificationService.ApplicationCore.UseCases;
+using NotificationService.Application.Settings;
+using NotificationService.Application.UseCases;
 using NotificationService.Domain;
 using NotificationService.Infra.Cache.Abstractions;
 using Xunit;
@@ -10,13 +10,13 @@ namespace NotificationService.Test.UseCases;
 
 public class RateLimitProcessorTests
 {
-        private readonly Mock<ICacheService> _mockCacheService;
+        private readonly Mock<ICacheRepository> _mockCacheService;
         private readonly RateLimitProcessor _rateLimitProcessor;
         private readonly RateLimitConfig _rateLimitConfig;
 
         public RateLimitProcessorTests()
         {
-            _mockCacheService = new Mock<ICacheService>();
+            _mockCacheService = new Mock<ICacheRepository>();
             
             var rateLimits = new Dictionary<string, RateLimitSettings>
             {

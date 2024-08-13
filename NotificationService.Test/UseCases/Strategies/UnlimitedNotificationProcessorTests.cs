@@ -1,4 +1,4 @@
-using NotificationService.ApplicationCore.UseCases.Strategies;
+using NotificationService.Application.UseCases.Strategies;
 using NotificationService.Domain;
 using Xunit;
 using Type = NotificationService.Domain.Type;

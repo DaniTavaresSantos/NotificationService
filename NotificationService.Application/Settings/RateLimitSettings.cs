@@ -1,4 +1,4 @@
-namespace NotificationService.ApplicationCore.Settings;
+namespace NotificationService.Application.Settings;
 
 public class RateLimitSettings
 {

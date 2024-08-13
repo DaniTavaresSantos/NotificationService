@@ -1,10 +1,9 @@
 using Microsoft.Extensions.Logging;
-using NotificationService.ApplicationCore.UseCases.Abstractions;
+using NotificationService.Application.UseCases.Abstractions;
 using NotificationService.Commons;
-using NotificationService.Contracts;
 using NotificationService.Domain;
 
-namespace NotificationService.ApplicationCore.UseCases.Strategies;
+namespace NotificationService.Application.UseCases.Strategies;
 
 public class RateLimitedNotificationProcessor : INotifierStrategy
 {
