@@ -36,8 +36,8 @@ To run the load tests you should follow these steps:
 1. Intall K6 tool using the following link as guide: https://k6.io/docs/get-started/installation/
 2. Once you are with k6 installed, open the command prompt on the project folder and type: "cd LoadTest"
 3. Then you should type "K6 run -d 15s -u 2 ./loadtest_script.js"
-4. Finally you will see a dashboard showing how many successful requests we had with 15 seconds of constant requests using 2 virtual machines.
-5. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 3 requests per minute.
+4. Finally, you will see a dashboard showing how many successful requests we had with 15 seconds of constant requests using 2 virtual machines.
+5. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 2 requests per minute.
 
 ##  Testing with Swagger or Postman
 
@@ -79,8 +79,8 @@ To run the load tests you should follow these steps:
     }
 ```
 
-5. Once we're testing using the type: #Status on the json example above, it will be possible to send 3 requests successfully on the Time Period of 1 minute for the emailAdress and type provided.
-- If you change any of these values (emailAdress or Type) the identity of the request will be changed and It will be possible to send more requests on the same Time Period.
+5. Once we're testing using the type: #Status on the json example above, it will be possible to send 2 requests successfully on the Time Period of 1 minute for the emailAdress and type provided.
+- If you change any of these values (emailAdress or Type) the identity of the request will be changed, and It will be possible to send more requests on the same Time Period.
 
 # Data Storing choices
 On this project I needed to choose two data storing tools, one to store the RateLimits information, and other to store the number of requests made by the user.
