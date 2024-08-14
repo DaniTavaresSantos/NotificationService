@@ -13,6 +13,8 @@ It was used some tools, Technologies and Patterns to allow the solution to work:
 - SwaggerUI
 - Redis
 - xUnit
+- Mock
+- AutoBogus
 - K6
 - Factory Pattern
 - Strategy Pattern
@@ -22,22 +24,48 @@ It was used some tools, Technologies and Patterns to allow the solution to work:
 ## How to Run the App
 
 1. Run a Docker App as Docker Desktop or Rancher Desktop
-2. Open the command prompt and type: "docker-compose build" 
-3. Type "docker-compose up -d" to start the application containers.
+2. Open the command prompt and type: 
+```cmd
+docker-compose build
+```
+
+3. Then, you should type 
+```cmd
+docker-compose up -d
+```
+to start the application containers.
 4. navigate to http://localhost:8082/swagger and use the Endpoints.
 
-to stop containers please type "docker-compose down"
+to stop containers please type 
+```cmd
+docker-compose down
+```
 
 ## Automated Tests
 
-For this solution I decided to implement Unit Testings for most of my Application. Achieving the coverage of 87%.
-I implemented as well LoadTests using K6 tool.
+### Unit Tests
+
+For this solution I decided to implement Unit Testings for most of my Application. Achieving the coverage of 89%:
+    <img width="836" alt="image" src="https://github.com/user-attachments/assets/1600aa5f-53bf-44da-9903-f36b28c62fdf">
+
+### Load Tests
+I implemented Load Tests as well using K6 tool.
 To run the load tests you should follow these steps:
-1. Intall K6 tool using the following link as guide: https://k6.io/docs/get-started/installation/
-2. Once you are with k6 installed, open the command prompt on the project folder and type: "cd LoadTest"
-3. Then you should type "K6 run -d 15s -u 2 ./loadtest_script.js"
-4. Finally, you will see a dashboard showing how many successful requests we had with 15 seconds of constant requests using 2 virtual machines.
-5. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 2 requests per minute.
+1. Install K6 tool using the following link as guide: https://k6.io/docs/get-started/installation/
+2. Once you are with k6 installed, open the command prompt on the project folder and type: 
+```cmd
+cd LoadTest
+```
+3. Then you should type:
+```cmd
+K6 run -d 10s -u 1 ./loadtest_script.js
+```
+4. Finally, you will see a dashboard showing how many successful requests we had with 10 seconds of constant requests using 1 virtual machine:
+   
+   ![image](https://github.com/user-attachments/assets/885640f4-f181-45fb-b199-1048dcf7e338)
+
+6. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 2 requests per minute.
+
 
 ##  Testing with Swagger or Postman
 
@@ -51,8 +79,8 @@ To run the load tests you should follow these steps:
     {
       "type": "Status",
       "recipient": {
-        "name": "daniel",
-        "emailAdress": "dani.tav99@hotmail.com"
+        "name": "Daniel",
+        "emailAdress": "dani.teste@hotmail.com"
       },
       "message": {
         "title": "Important message",
