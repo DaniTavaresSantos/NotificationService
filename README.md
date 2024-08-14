@@ -13,6 +13,8 @@ It was used some tools, Technologies and Patterns to allow the solution to work:
 - SwaggerUI
 - Redis
 - xUnit
+- Mock
+- AutoBogus
 - K6
 - Factory Pattern
 - Strategy Pattern
@@ -43,7 +45,8 @@ docker-compose down
 
 ### Unit Tests
 
-For this solution I decided to implement Unit Testings for most of my Application. Achieving the coverage of 87%.
+For this solution I decided to implement Unit Testings for most of my Application. Achieving the coverage of 89%:
+    <img width="836" alt="image" src="https://github.com/user-attachments/assets/1600aa5f-53bf-44da-9903-f36b28c62fdf">
 
 ### Load Tests
 I implemented Load Tests as well using K6 tool.
@@ -58,7 +61,11 @@ cd LoadTest
 K6 run -d 10s -u 1 ./loadtest_script.js
 ```
 4. Finally, you will see a dashboard showing how many successful requests we had with 10 seconds of constant requests using 1 virtual machine:
-5. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 2 requests per minute.
+   
+   ![image](https://github.com/user-attachments/assets/885640f4-f181-45fb-b199-1048dcf7e338)
+
+6. The project is configured to use a mocked request with the Request Type = Status, so It will allow only 2 requests per minute.
+
 
 ##  Testing with Swagger or Postman
 
