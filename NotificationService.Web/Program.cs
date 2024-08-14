@@ -32,6 +32,8 @@ builder.Services.AddControllers(_ =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+builder.WebHost.UseUrls("http://*:5001");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
