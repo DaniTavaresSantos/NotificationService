@@ -27,7 +27,7 @@ public class RateLimitedNotificationGateway : INotifierStrategy
             Console.WriteLine($"Sending message of type {notification.Type.ToString()} to user: {notification.Recipient.EmailAdress}");
             
             //The code below is a simulation of a communication of this service with a Message broker or External Api, that is going to send the message effectively
-            await Task.Delay(100);
+            await Task.Delay(10);
             
             Console.WriteLine($"Message of type {notification.Type.ToString()} sent to user: {notification.Recipient.EmailAdress}");
             _logger.LogInformation("Notification of type {type} sent to {email}", notification.Type.ToString(), notification.Recipient.EmailAdress);
