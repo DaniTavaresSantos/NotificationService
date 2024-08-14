@@ -12,7 +12,7 @@ export const options = {
 };
 
 export default function () {
-  const urlOrgs = 'https://localhost:5000/Notification';
+  const url = 'http://localhost:8082/Notification';
   const params = {
     headers: {
       'accept': '*/*',
@@ -22,7 +22,7 @@ export default function () {
   };
 
   // Data for the POST request
-  const createOrgData = JSON.stringify({
+  const endpointBody = JSON.stringify({
     "type": "Status",
     "recipient": {
         "name": "daniel",
@@ -36,9 +36,9 @@ export default function () {
   const requests = {
     'Notification': {
       method: 'POST',
-      url: urlOrgs,
+      url: url,
       params: params,
-      body: createOrgData,
+      body: endpointBody,
     },
   };
 
