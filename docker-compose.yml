@@ -1,12 +1,13 @@
 ﻿services:
   notificationservice.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     container_name: ${DOCKER_REGISTRY-}notificationservice.web
     build:
       context: .
       dockerfile: NotificationService.Web/Dockerfile
     ports:
-      - "8080:5000"
-      - "8081:5001"
+      - "8082:5001"
         
   rediscache:
     container_name: "rediscache"
