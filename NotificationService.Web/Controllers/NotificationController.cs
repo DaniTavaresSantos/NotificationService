@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NotificationService.Application.Abstractions.UseCases;
 using NotificationService.Domain;
@@ -9,24 +10,22 @@ namespace NotificationService.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class NotificationController : ControllerBase
+public class NotificationController(INotificationProcessor notificationProcessor, IValidator<NotificationRequest> validator) : ControllerBase
 {
-    private readonly INotificationProcessor _notificationProcessor;
-
-    public NotificationController(INotificationProcessor notificationProcessor)
-    {
-        _notificationProcessor = notificationProcessor;
-    }
-
     [HttpPost]
     public async Task<IActionResult> SendNotification(
         [FromBody] [Required] NotificationRequest request,
         [FromHeader] [Required] LimitType limitType,
         CancellationToken cancellationToken)
     {
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        
+        if(!validationResult.IsValid)
+            return BadRequest(validationResult);
+        
         var notification = request.ToNotification(limitType);
         
-        var response = await _notificationProcessor.Send(notification, cancellationToken);
+        var response = await notificationProcessor.Send(notification, cancellationToken);
 
         return response.IsSuccess ? Ok(response) : StatusCode(429, response);
     }

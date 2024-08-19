@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using NotificationService.Application.UseCases;
 using NotificationService.Application.Abstractions.UseCases;
+using NotificationService.Application.Validators;
 
 namespace NotificationService.Application.Settings;
 
@@ -14,5 +16,7 @@ public static class ApplicationSettings
         services.AddScoped<INotificationProcessor, NotificationProcessor>();
 
         services.AddTransient<INotifierFactory, NotifierFactory>();
+        
+        services.AddValidatorsFromAssemblyContaining<NotificationRequestValidator>();
     }
 }
