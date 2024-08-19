@@ -13,6 +13,7 @@ It was used some tools, Technologies and Patterns to allow the solution to work:
 - SwaggerUI
 - Redis
 - xUnit
+- FluentValidations 
 - Mock
 - AutoBogus
 - K6
@@ -34,6 +35,7 @@ docker-compose build
 docker-compose up -d
 ```
 to start the application containers.
+
 4. navigate to http://localhost:8082/swagger and use the Endpoints.
 
 to stop containers please type 
@@ -71,10 +73,20 @@ K6 run -d 10s -u 1 ./loadtest_script.js
 
 1. Once you navigated to http://localhost:8082/swagger, you will see the Post Endpoint called Notification:
     ![image](https://github.com/user-attachments/assets/a6ff145c-7fb8-40fe-bc93-968741205871)
-2. If you want to use the RateLimit functionality you should select the value of the header field: LimitType to: RateLimited:
+2. If you want to use the Rate Limit functionality you should select the value of the header field: LimitType to: RateLimited:
      ![image](https://github.com/user-attachments/assets/d1c0bff9-fa9f-44f1-b1f0-aa2158e25dd9)
    - If you change the value of the header LimitType to Unlimited, there won't be limit rules applied to the request, so it will work everytime.
-4. For the body, I suggest you to use this json:
+
+### Request Validations
+I implemented field validations to the Notification Request so if you want to use the endpoint you should follow these rules:
+
+- Recipient.Email: Not Empty, between 1 and 100 characters and should be a valid email.
+- Recipient.Name: Not Empty, between 1 and 100 characters
+- Message.Body: Not empty, between 1 and 200 characters
+- Message.Title: Not empty, between 1 and 50 characters
+
+    
+3. For the body, I suggest you to use this json:
 ```json
     {
       "type": "Status",
