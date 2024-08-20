@@ -1,4 +1,4 @@
-## Rate-Limited Notification Service
+# Rate-Limited Notification Service
 This is a project focused on protect recipients from getting too many emails, either due to system errors or due to abuse
 
 ## 💻 Solution Proposal
@@ -125,7 +125,7 @@ I implemented field validations to the Notification Request so if you want to us
 # Data Storing choices
 On this project I needed to choose two data storing tools, one to store the RateLimits information, and other to store the number of requests made by the user.
 
-## 1. RateLimits information - AppSettings:
+### RateLimits information - AppSettings:
   - To store the RateLimits information I chose to use the AppSettings file. 
   - AppSettings file is a Dictionary type file that is responsible to provide Key-value informations that can be used while the application is running. 
   - Once this file is treated as a Dictionary, we have constant time to Search for values on this file, if we have the key of them.
@@ -151,7 +151,7 @@ On this project I needed to choose two data storing tools, one to store the Rate
       }
     }
 ```
-## 2. Number of Already made Requests - Redis Distributed Cache:
+### Number of Already made Requests - Redis Distributed Cache:
   - To store the number of requests of the user, and update them when its needed, I chose Redis.
   - Redis has a few usabilities, and one of them is using it as a Distributed Cache.
   - For this solution I'm imagining that this Application is going to have thousands of concurrent requests per hour, so a robust database is needed.
@@ -159,6 +159,23 @@ On this project I needed to choose two data storing tools, one to store the Rate
   and the application won't allow a new Request in any other pod, if the limit for that type of Request is 2.
   - I chose Redis over MemoryCache of .NET because with MemoryCache we would have a new Cache for each instance of the app, enabling possible consistency errors.
 
+## Possible Improvements:
+- #### Add Integration Tests:
+Unit Testing is really important but is not enough to ensure the quality of your code. On this project so far, I decided to add unit testing and Load testing, but Integration Tests would allow us to examine the interaction of all the modules of our notification flow together.
+- #### Draw a C4 model diagram for the Project:
+This project has only one endpoint which is responsible to call one use case, but having a c4 model diagram would help any other developer interested in maintain or develop a new feature on the project.
+- #### Add unit Tests for the Validation Class created:
+Once defined the business rules with the business team, I believe that having Unit tests for each rule defined for the fields of the Requests has a great value. This way we can ensure that only valid requests would be accepted and persisted.
+  
+## Conclusion:
+
+- Using C# it is possible to create a Rate Limit App in many different ways, using many tools, what will define which tool you will choose in my point of view are 3 main concerns: 
+    - the business rules 
+    - the time you have to develop
+    - the number of requests you expect to receive on that endpoint
+- I chose Redis and AppSettings because with that approach the Application will handle thousands of concurrent requests, and It is really easy to Add a new Rate Limit type and observe the ones that are already in use. 
+- If the RateLimit information becomes a sensitive data, I'd rather store this information on a SQL database over Redis, or even MongoDB if reading the data faster is more important than storing it faster. 
+- Or even if cost reduction becomes a must, I'd rather using MemoryCache instead of Redis, once we don’t need to download an image of Redis on Docker to use it, MemoryCache is a library provided from DotNet natively so there's no financial cost in using it.
 
 
 
